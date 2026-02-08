@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  :root {
+    /* DEFAULT (INFERNO) - Bright Neon Orange */
+    --primary: 255 100 0;
+    --bg-dark-900: 5 5 5;
+    --bg-dark-800: 12 12 12;
+  }
+
+  /* 2. HACKER (Matrix) - Toxic Green */
+  [data-theme='hacker'] {
+    --primary: 0 255 65;
+    --bg-dark-900: 0 10 0;
+    --bg-dark-800: 5 20 5;
+  }
+
+  /* 3. CYBERPUNK - Hot Pink / Neon Magenta */
+  [data-theme='cyberpunk'] {
+    --primary: 255 0 255;
+    --bg-dark-900: 10 0 20;
+    --bg-dark-800: 25 5 40;
+  }
+
+  /* 4. OCEAN - Electric Cyan */
+  [data-theme='ocean'] {
+    --primary: 0 220 255;
+    --bg-dark-900: 0 5 15;
+    --bg-dark-800: 5 15 30;
+  }
+
+  /* 5. DRACULA - Vivid Purple */
+  [data-theme='dracula'] {
+    --primary: 180 100 255;
+    --bg-dark-900: 30 30 40;
+    --bg-dark-800: 50 50 65;
+  }
+
+  /* 6. SUNSET - Blazing Pink/Red */
+  [data-theme='sunset'] {
+    --primary: 255 40 100;
+    --bg-dark-900: 20 5 5;
+    --bg-dark-800: 40 10 10;
+  }
+
+  /* 7. RED - Bright Neon Red */
+  [data-theme='forest'] {
+    --primary: 255 0 0;
+    /* Pure Red */
+    --bg-dark-900: 15 0 0;
+    --bg-dark-800: 25 5 5;
+  }
+
+  /* 8. MIDNIGHT - Electric Indigo */
+  [data-theme='midnight'] {
+    --primary: 120 100 255;
+    --bg-dark-900: 2 2 20;
+    --bg-dark-800: 10 10 40;
+  }
+
+  /* 9. CRIMSON - Deep Red */
+  [data-theme='gold'] {
+    --primary: 255 0 60;
+    /* Neon Red/Pink */
+    --bg-dark-900: 10 0 5;
+    --bg-dark-800: 25 5 10;
+  }
+
+  /* 10. FROZEN - Bright Ice Blue */
+  [data-theme='frozen'] {
+    --primary: 0 200 255;
+    --bg-dark-900: 5 15 30;
+    --bg-dark-800: 15 30 50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-900 text-gray-100 font-sans selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+  /* dark-900 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  /* dark-700 */
+  border: 2px solid #0f172a;
+  /* Creates a padding effect */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+  /* dark-600 */
+}
