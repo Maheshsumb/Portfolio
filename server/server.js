@@ -19,7 +19,8 @@ app.use(cors({
         'http://localhost:5175', 
         'http://localhost:5176',
         'https://maheshsumb.in',
-        'https://www.maheshsumb.in'
+        'https://www.maheshsumb.in',
+        'https://portfolio-bice-kappa-21.vercel.app'
     ],
     credentials: true
 }));
