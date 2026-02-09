@@ -15,12 +15,11 @@ app.use(cookieParser());
 app.use(cors({
     origin: [
         'http://localhost:5173', 
-        'http://localhost:5174', 
-        'http://localhost:5175', 
-        'http://localhost:5176',
         'https://maheshsumb.in',
         'https://www.maheshsumb.in',
-        'https://portfolio-bice-kappa-21.vercel.app'
+        'https://portfolio-bice-kappa-21.vercel.app',
+        'https://mahehsumb.in',
+        'https://www.mahehsumb.in'
     ],
     credentials: true
 }));
