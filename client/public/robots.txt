@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://maheshsumb.in/sitemap.xml
+Sitemap: https://www.mahehsumb.in/sitemap.xml

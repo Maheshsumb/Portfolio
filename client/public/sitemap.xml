@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://maheshsumb.in/</loc>
+    <loc>https://www.mahehsumb.in/</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://maheshsumb.in/projects</loc>
+    <loc>https://www.mahehsumb.in/projects</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://maheshsumb.in/about</loc>
+    <loc>https://www.mahehsumb.in/about</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://maheshsumb.in/contact</loc>
+    <loc>https://www.mahehsumb.in/contact</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+
 
 </urlset>

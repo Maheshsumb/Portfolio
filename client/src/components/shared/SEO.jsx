@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 const SEO = ({ title, description, image, url }) => {
     const siteTitle = title ? `${title} | Mahesh Sumb` : 'Mahesh Sumb | Full Stack Developer';
     const siteDescription = description || 'Portfolio of Mahesh Sumb, a Full Stack Developer specializing in MERN stack, Spring Boot, and modern web development.';
-    const siteUrl = url || 'https://maheshsumb.in'; 
+    const siteUrl = url || 'https://www.mahehsumb.in'; 
     const siteImage = image || 'https://res.cloudinary.com/dcw8dat4r/image/upload/v1769936320/portfolio/cy38rgy1awcwqwzbbzdw.png'; 
 
     // Proper canonical URL construction
