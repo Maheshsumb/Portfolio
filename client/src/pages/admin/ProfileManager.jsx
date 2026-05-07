@@ -102,9 +102,21 @@ const ProfileManager = () => {
                             <label className="block text-gray-400 mb-2">GitHub URL</label>
                             <input name="github" value={formData.github || ''} onChange={handleChange} className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gray-200" />
                         </div>
-                         <div>
+                        <div>
                             <label className="block text-gray-400 mb-2">LinkedIn URL</label>
                             <input name="linkedin" value={formData.linkedin || ''} onChange={handleChange} className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gray-200" />
+                        </div>
+                        <div>
+                            <label className="block text-gray-400 mb-2">Instagram URL</label>
+                            <input name="instagram" value={formData.instagram || ''} onChange={handleChange} className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gray-200" />
+                        </div>
+                        <div>
+                            <label className="block text-gray-400 mb-2">WhatsApp Number (e.g., 918999412872)</label>
+                            <input name="whatsapp" value={formData.whatsapp || ''} onChange={handleChange} className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gray-200" />
+                        </div>
+                        <div>
+                            <label className="block text-gray-400 mb-2">Secondary Email</label>
+                            <input name="email2" value={formData.email2 || ''} onChange={handleChange} className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gray-200" />
                         </div>
                     </div>
 

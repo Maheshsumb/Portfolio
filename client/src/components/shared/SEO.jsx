@@ -24,7 +24,9 @@ const SEO = ({ title, description, image, url }) => {
         "image": siteImage,
         "sameAs": [
             profile?.linkedin || "",
-            profile?.github || ""
+            profile?.github || "",
+            profile?.instagram || "",
+            profile?.whatsapp ? `https://wa.me/${profile.whatsapp.replace(/[^0-9]/g, '')}` : ""
         ].filter(Boolean),
         "jobTitle": profile?.title || "Full Stack Developer",
         "worksFor": {

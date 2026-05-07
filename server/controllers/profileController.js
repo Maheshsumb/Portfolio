@@ -25,9 +25,12 @@ const updateProfile = async (req, res) => {
             profile.location = req.body.location || profile.location;
             profile.about = req.body.about || profile.about;
             profile.email = req.body.email || profile.email;
+            profile.email2 = req.body.email2 || profile.email2;
             profile.phone = req.body.phone || profile.phone;
             profile.github = req.body.github || profile.github;
             profile.linkedin = req.body.linkedin || profile.linkedin;
+            profile.instagram = req.body.instagram || profile.instagram;
+            profile.whatsapp = req.body.whatsapp || profile.whatsapp;
             profile.resumeUrl = req.body.resumeUrl || profile.resumeUrl;
             profile.imageUrl = req.body.imageUrl || profile.imageUrl;
             profile.favicon = req.body.favicon || profile.favicon;

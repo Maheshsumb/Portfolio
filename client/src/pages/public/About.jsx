@@ -1,28 +1,12 @@
-import { useEffect, useState } from 'react';
-import api from '../../services/api';
+import { useProfile } from '../../context/ProfileContext';
 import Loader from '../../components/shared/Loader';
 import { FaGithub, FaLinkedin, FaInstagram, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa';
 import SpotlightCard from '../../components/shared/SpotlightCard';
 
 const About = () => {
-    const [profile, setProfile] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const { profile, loadingProfile } = useProfile();
 
-    useEffect(() => {
-        const fetchProfile = async () => {
-             try {
-                 const { data } = await api.get('/profile');
-                 setProfile(data);
-             } catch (error) {
-                 console.error(error);
-             } finally {
-                 setLoading(false);
-             }
-        };
-        fetchProfile();
-    }, []);
-
-    if (loading) return <Loader />;
+    if (loadingProfile) return <Loader />;
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-12 relative z-10">
@@ -62,42 +46,56 @@ const About = () => {
                              <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-300">Contact Details</h3>
                              <div className="space-y-3">
                                  {/* Emails */}
-                                 <div className="flex items-start gap-3 text-gray-400">
-                                     <FaEnvelope className="mt-1 text-primary-400 flex-shrink-0" />
-                                     <div className="flex flex-col">
-                                         <a href="mailto:maheshsumbpatil87@gmail.com" className="hover:text-white transition-colors">maheshsumbpatil87@gmail.com</a>
-                                         <a href="mailto:maheshsumb@zohomail.in" className="hover:text-white transition-colors">maheshsumb@zohomail.in</a>
+                                 {(profile?.email || profile?.email2) && (
+                                     <div className="flex items-start gap-3 text-gray-400">
+                                         <FaEnvelope className="mt-1 text-primary-400 flex-shrink-0" />
+                                         <div className="flex flex-col">
+                                             {profile?.email && <a href={`mailto:${profile.email}`} className="hover:text-white transition-colors">{profile.email}</a>}
+                                             {profile?.email2 && <a href={`mailto:${profile.email2}`} className="hover:text-white transition-colors">{profile.email2}</a>}
+                                         </div>
                                      </div>
-                                 </div>
+                                 )}
                                  
                                  {/* Phone */}
-                                 <div className="flex items-center gap-3 text-gray-400">
-                                     <FaPhoneAlt className="text-primary-400 flex-shrink-0" />
-                                     <a href="tel:+918999412872" className="hover:text-white transition-colors">+91 89994 12872</a>
-                                 </div>
+                                 {profile?.phone && (
+                                     <div className="flex items-center gap-3 text-gray-400">
+                                         <FaPhoneAlt className="text-primary-400 flex-shrink-0" />
+                                         <a href={`tel:${profile.phone}`} className="hover:text-white transition-colors">{profile.phone}</a>
+                                     </div>
+                                 )}
 
                                  {/* Location */}
-                                 <div className="flex items-center gap-3 text-gray-400">
-                                     <FaMapMarkerAlt className="text-primary-400 flex-shrink-0" />
-                                     <span>Pune, Maharashtra, India</span>
-                                 </div>
+                                 {profile?.location && (
+                                     <div className="flex items-center gap-3 text-gray-400">
+                                         <FaMapMarkerAlt className="text-primary-400 flex-shrink-0" />
+                                         <span>{profile.location}</span>
+                                     </div>
+                                 )}
                              </div>
                         </div>
 
                         {/* Minimal Social Icons */}
                         <div className="flex justify-center md:justify-start gap-5 pt-2">
-                            <a href="https://github.com/maheshsumb" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white hover:scale-110 transition-all duration-300" title="GitHub">
-                                <FaGithub size={20} />
-                            </a>
-                            <a href="https://www.linkedin.com/in/mahesh-sumb/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-blue-400 hover:scale-110 transition-all duration-300" title="LinkedIn">
-                                <FaLinkedin size={20} />
-                            </a>
-                            <a href="https://instagram.com/mahesh_sumb_patil" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-pink-500 hover:scale-110 transition-all duration-300" title="Instagram">
-                                <FaInstagram size={20} />
-                            </a>
-                             <a href="https://wa.me/918999412872" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-green-500 hover:scale-110 transition-all duration-300" title="WhatsApp">
-                                <FaWhatsapp size={20} />
-                            </a>
+                            {profile?.github && (
+                                <a href={profile.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white hover:scale-110 transition-all duration-300" title="GitHub">
+                                    <FaGithub size={20} />
+                                </a>
+                            )}
+                            {profile?.linkedin && (
+                                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-blue-400 hover:scale-110 transition-all duration-300" title="LinkedIn">
+                                    <FaLinkedin size={20} />
+                                </a>
+                            )}
+                            {profile?.instagram && (
+                                <a href={profile.instagram} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-pink-500 hover:scale-110 transition-all duration-300" title="Instagram">
+                                    <FaInstagram size={20} />
+                                </a>
+                            )}
+                            {profile?.whatsapp && (
+                                 <a href={`https://wa.me/${profile.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-green-500 hover:scale-110 transition-all duration-300" title="WhatsApp">
+                                    <FaWhatsapp size={20} />
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>

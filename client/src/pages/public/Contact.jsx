@@ -5,7 +5,10 @@ import { FaPaperPlane, FaUser, FaEnvelope, FaCommentAlt, FaGithub, FaLinkedin, F
 import SEO from '../../components/shared/SEO';
 import SpotlightCard from '../../components/shared/SpotlightCard';
 
+import { useProfile } from '../../context/ProfileContext';
+
 const Contact = () => {
+    const { profile } = useProfile();
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [status, setStatus] = useState(null); // 'sending', 'success', 'error'
 
@@ -51,65 +54,83 @@ const Contact = () => {
 
                     <div className="space-y-8">
                         {/* Email */}
-                        <div className="flex items-start gap-4 text-gray-300">
-                             <div className="w-12 h-12 rounded-full bg-dark-900/50 flex flex-shrink-0 items-center justify-center text-primary-400 border border-white/5 shadow-lg group-hover:border-primary-500/30 transition-colors">
-                                <FaEnvelope size={20} />
-                             </div>
-                             <div>
-                                 <p className="text-sm text-gray-500 mb-1">Email Me</p>
-                                 <div className="flex flex-col gap-1">
-                                    <a href="mailto:maheshsumbpatil87@gmail.com" className="font-medium hover:text-primary-400 transition-colors">
-                                        maheshsumbpatil87@gmail.com
-                                    </a>
-                                    <a href="mailto:maheshsumb@zohomail.in" className="font-medium hover:text-primary-400 transition-colors">
-                                        maheshsumb@zohomail.in
-                                    </a>
-                                 </div>
-                             </div>
-                        </div>
+                        {(profile?.email || profile?.email2) && (
+                            <div className="flex items-start gap-4 text-gray-300">
+                                <div className="w-12 h-12 rounded-full bg-dark-900/50 flex flex-shrink-0 items-center justify-center text-primary-400 border border-white/5 shadow-lg group-hover:border-primary-500/30 transition-colors">
+                                    <FaEnvelope size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500 mb-1">Email Me</p>
+                                    <div className="flex flex-col gap-1">
+                                        {profile?.email && (
+                                            <a href={`mailto:${profile.email}`} className="font-medium hover:text-primary-400 transition-colors">
+                                                {profile.email}
+                                            </a>
+                                        )}
+                                        {profile?.email2 && (
+                                            <a href={`mailto:${profile.email2}`} className="font-medium hover:text-primary-400 transition-colors">
+                                                {profile.email2}
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Phone */}
-                        <div className="flex items-center gap-4 text-gray-300">
-                             <div className="w-12 h-12 rounded-full bg-dark-900/50 flex flex-shrink-0 items-center justify-center text-primary-400 border border-white/5 shadow-lg">
-                                <FaPhoneAlt size={20} />
-                             </div>
-                             <div>
-                                 <p className="text-sm text-gray-500 mb-1">Call Me</p>
-                                 <a href="tel:+918999412872" className="font-medium hover:text-primary-400 transition-colors">
-                                     +91 89994 12872
-                                 </a>
-                             </div>
-                        </div>
+                        {profile?.phone && (
+                            <div className="flex items-center gap-4 text-gray-300">
+                                 <div className="w-12 h-12 rounded-full bg-dark-900/50 flex flex-shrink-0 items-center justify-center text-primary-400 border border-white/5 shadow-lg">
+                                    <FaPhoneAlt size={20} />
+                                 </div>
+                                 <div>
+                                     <p className="text-sm text-gray-500 mb-1">Call Me</p>
+                                     <a href={`tel:${profile.phone}`} className="font-medium hover:text-primary-400 transition-colors">
+                                         {profile.phone}
+                                     </a>
+                                 </div>
+                            </div>
+                        )}
 
                         {/* Location */}
-                         <div className="flex items-center gap-4 text-gray-300">
-                             <div className="w-12 h-12 rounded-full bg-dark-900/50 flex flex-shrink-0 items-center justify-center text-primary-400 border border-white/5 shadow-lg">
-                                <FaMapMarkerAlt size={20} />
-                             </div>
-                             <div>
-                                 <p className="text-sm text-gray-500 mb-1">Location</p>
-                                 <p className="font-medium">
-                                     Pune, Maharashtra, India
-                                 </p>
-                             </div>
-                        </div>
+                         {profile?.location && (
+                             <div className="flex items-center gap-4 text-gray-300">
+                                 <div className="w-12 h-12 rounded-full bg-dark-900/50 flex flex-shrink-0 items-center justify-center text-primary-400 border border-white/5 shadow-lg">
+                                    <FaMapMarkerAlt size={20} />
+                                 </div>
+                                 <div>
+                                     <p className="text-sm text-gray-500 mb-1">Location</p>
+                                     <p className="font-medium">
+                                         {profile.location}
+                                     </p>
+                                 </div>
+                            </div>
+                         )}
                     </div>
 
                     <div>
                         <p className="text-gray-500 mb-4 text-sm uppercase tracking-wider">Socials</p>
                         <div className="flex gap-4">
-                            <a href="https://github.com/maheshsumb" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 hover:scale-110 transition-all duration-300">
-                                <FaGithub size={20} />
-                            </a>
-                            <a href="https://www.linkedin.com/in/mahesh-sumb/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:scale-110 transition-all duration-300">
-                                <FaLinkedin size={20} />
-                            </a>
-                            <a href="https://instagram.com/mahesh_sumb_patil" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-pink-600 hover:scale-110 transition-all duration-300">
-                                <FaInstagram size={20} />
-                            </a>
-                            <a href="https://wa.me/918999412872" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-green-500 hover:scale-110 transition-all duration-300">
-                                <FaWhatsapp size={20} />
-                            </a>
+                            {profile?.github && (
+                                <a href={profile.github} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 hover:scale-110 transition-all duration-300">
+                                    <FaGithub size={20} />
+                                </a>
+                            )}
+                            {profile?.linkedin && (
+                                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:scale-110 transition-all duration-300">
+                                    <FaLinkedin size={20} />
+                                </a>
+                            )}
+                            {profile?.instagram && (
+                                <a href={profile.instagram} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-pink-600 hover:scale-110 transition-all duration-300">
+                                    <FaInstagram size={20} />
+                                </a>
+                            )}
+                            {profile?.whatsapp && (
+                                <a href={`https://wa.me/${profile.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-green-500 hover:scale-110 transition-all duration-300">
+                                    <FaWhatsapp size={20} />
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>
