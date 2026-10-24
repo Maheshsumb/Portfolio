@@ -31,7 +31,18 @@ const logoutUser = (req, res) => {
     res.status(200).json({ message: 'Logged out successfully' });
 };
 
+// @desc    Get current user session
+// @route   GET /api/auth/me
+// @access  Private
+const getMe = async (req, res) => {
+    res.json({
+        _id: req.user._id,
+        username: req.user.username,
+    });
+};
+
 module.exports = {
     loginUser,
     logoutUser,
+    getMe,
 };

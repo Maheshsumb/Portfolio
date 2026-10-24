@@ -19,27 +19,29 @@ const updateProfile = async (req, res) => {
     try {
         const profile = await Profile.findOne();
 
+        const fields = [
+            'name', 'title', 'location', 'about', 'email', 'email2', 
+            'phone', 'github', 'linkedin', 'instagram', 'whatsapp', 
+            'resumeUrl', 'imageUrl', 'favicon', 'theme'
+        ];
+
         if (profile) {
-            profile.name = req.body.name || profile.name;
-            profile.title = req.body.title || profile.title;
-            profile.location = req.body.location || profile.location;
-            profile.about = req.body.about || profile.about;
-            profile.email = req.body.email || profile.email;
-            profile.email2 = req.body.email2 || profile.email2;
-            profile.phone = req.body.phone || profile.phone;
-            profile.github = req.body.github || profile.github;
-            profile.linkedin = req.body.linkedin || profile.linkedin;
-            profile.instagram = req.body.instagram || profile.instagram;
-            profile.whatsapp = req.body.whatsapp || profile.whatsapp;
-            profile.resumeUrl = req.body.resumeUrl || profile.resumeUrl;
-            profile.imageUrl = req.body.imageUrl || profile.imageUrl;
-            profile.favicon = req.body.favicon || profile.favicon;
-            profile.theme = req.body.theme || profile.theme;
+            fields.forEach(field => {
+                if (req.body[field] !== undefined) {
+                    profile[field] = req.body[field];
+                }
+            });
 
             const updatedProfile = await profile.save();
             res.json(updatedProfile);
         } else {
-            const newProfile = new Profile(req.body);
+            const profileData = {};
+            fields.forEach(field => {
+                if (req.body[field] !== undefined) {
+                    profileData[field] = req.body[field];
+                }
+            });
+            const newProfile = new Profile(profileData);
             const savedProfile = await newProfile.save();
             res.json(savedProfile);
         }

@@ -4,6 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 import { useProfile } from '../../context/ProfileContext';
 import { FaGithub, FaLinkedin, FaBars, FaTimes } from 'react-icons/fa';
 
+import { sanitizeUrl } from '../../utils/sanitizeUrl';
+
 const Navbar = () => {
   const { user, logout } = useAuth();
   const { profile } = useProfile();
@@ -72,12 +74,12 @@ const Navbar = () => {
             {/* Desktop Social + Logout */}
             <div className="hidden md:flex items-center gap-4">
               {profile?.github && (
-                <a href={profile.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href={sanitizeUrl(profile.github)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <FaGithub size={20} />
                 </a>
               )}
               {profile?.linkedin && (
-                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href={sanitizeUrl(profile.linkedin)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <FaLinkedin size={20} />
                 </a>
               )}
@@ -91,12 +93,12 @@ const Navbar = () => {
             {/* Mobile: Social icons + Hamburger */}
             <div className="flex md:hidden items-center gap-3">
               {profile?.github && (
-                <a href={profile.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href={sanitizeUrl(profile.github)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <FaGithub size={18} />
                 </a>
               )}
               {profile?.linkedin && (
-                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href={sanitizeUrl(profile.linkedin)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
                   <FaLinkedin size={18} />
                 </a>
               )}

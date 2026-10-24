@@ -17,7 +17,14 @@ const getCertificates = async (req, res) => {
 // @access  Private
 const createCertificate = async (req, res) => {
     try {
-        const newCertificate = new Certificate(req.body);
+        const { title, provider, year, certificateUrl, isVisible } = req.body;
+        const newCertificate = new Certificate({
+            title,
+            provider,
+            year,
+            certificateUrl,
+            isVisible: isVisible !== undefined ? Boolean(isVisible) : true
+        });
         const savedCertificate = await newCertificate.save();
         res.status(201).json(savedCertificate);
     } catch (error) {
@@ -32,7 +39,13 @@ const updateCertificate = async (req, res) => {
     try {
         const certificate = await Certificate.findById(req.params.id);
         if (certificate) {
-            Object.assign(certificate, req.body);
+            const { title, provider, year, certificateUrl, isVisible } = req.body;
+            if (title !== undefined) certificate.title = title;
+            if (provider !== undefined) certificate.provider = provider;
+            if (year !== undefined) certificate.year = year;
+            if (certificateUrl !== undefined) certificate.certificateUrl = certificateUrl;
+            if (isVisible !== undefined) certificate.isVisible = Boolean(isVisible);
+
             const updatedCertificate = await certificate.save();
             res.json(updatedCertificate);
         } else {

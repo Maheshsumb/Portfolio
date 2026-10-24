@@ -29,7 +29,17 @@ const getAllEducation = async (req, res) => {
 // @access  Private
 const createEducation = async (req, res) => {
     try {
-        const newEducation = new Education(req.body);
+        const { degree, institution, department, year, grade, description, order, isVisible } = req.body;
+        const newEducation = new Education({
+            degree,
+            institution,
+            department,
+            year,
+            grade,
+            description,
+            order: order !== undefined ? Number(order) : 0,
+            isVisible: isVisible !== undefined ? Boolean(isVisible) : true
+        });
         const savedEducation = await newEducation.save();
         res.status(201).json(savedEducation);
     } catch (error) {
@@ -44,7 +54,16 @@ const updateEducation = async (req, res) => {
     try {
         const education = await Education.findById(req.params.id);
         if (education) {
-            Object.assign(education, req.body);
+            const { degree, institution, department, year, grade, description, order, isVisible } = req.body;
+            if (degree !== undefined) education.degree = degree;
+            if (institution !== undefined) education.institution = institution;
+            if (department !== undefined) education.department = department;
+            if (year !== undefined) education.year = year;
+            if (grade !== undefined) education.grade = grade;
+            if (description !== undefined) education.description = description;
+            if (order !== undefined) education.order = Number(order) || 0;
+            if (isVisible !== undefined) education.isVisible = Boolean(isVisible);
+
             const updatedEducation = await education.save();
             res.json(updatedEducation);
         } else {

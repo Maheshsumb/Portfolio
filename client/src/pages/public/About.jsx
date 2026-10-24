@@ -2,6 +2,7 @@ import { useProfile } from '../../context/ProfileContext';
 import Loader from '../../components/shared/Loader';
 import { FaGithub, FaLinkedin, FaInstagram, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa';
 import SpotlightCard from '../../components/shared/SpotlightCard';
+import { sanitizeUrl } from '../../utils/sanitizeUrl';
 
 const About = () => {
     const { profile, loadingProfile } = useProfile();
@@ -77,17 +78,17 @@ const About = () => {
                         {/* Minimal Social Icons */}
                         <div className="flex justify-center md:justify-start gap-5 pt-2">
                             {profile?.github && (
-                                <a href={profile.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white hover:scale-110 transition-all duration-300" title="GitHub">
+                                <a href={sanitizeUrl(profile.github)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white hover:scale-110 transition-all duration-300" title="GitHub">
                                     <FaGithub size={20} />
                                 </a>
                             )}
                             {profile?.linkedin && (
-                                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-blue-400 hover:scale-110 transition-all duration-300" title="LinkedIn">
+                                <a href={sanitizeUrl(profile.linkedin)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-blue-400 hover:scale-110 transition-all duration-300" title="LinkedIn">
                                     <FaLinkedin size={20} />
                                 </a>
                             )}
                             {profile?.instagram && (
-                                <a href={profile.instagram} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-pink-500 hover:scale-110 transition-all duration-300" title="Instagram">
+                                <a href={sanitizeUrl(profile.instagram)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-pink-500 hover:scale-110 transition-all duration-300" title="Instagram">
                                     <FaInstagram size={20} />
                                 </a>
                             )}

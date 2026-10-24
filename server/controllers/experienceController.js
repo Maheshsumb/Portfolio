@@ -29,7 +29,15 @@ const getAllExperience = async (req, res) => {
 // @access  Private
 const createExperience = async (req, res) => {
     try {
-        const newExperience = new Experience(req.body);
+        const { role, company, duration, description, order, isVisible } = req.body;
+        const newExperience = new Experience({
+            role,
+            company,
+            duration,
+            description,
+            order: order !== undefined ? Number(order) : 0,
+            isVisible: isVisible !== undefined ? Boolean(isVisible) : true
+        });
         const savedExperience = await newExperience.save();
         res.status(201).json(savedExperience);
     } catch (error) {
@@ -44,7 +52,14 @@ const updateExperience = async (req, res) => {
     try {
         const experience = await Experience.findById(req.params.id);
         if (experience) {
-            Object.assign(experience, req.body);
+            const { role, company, duration, description, order, isVisible } = req.body;
+            if (role !== undefined) experience.role = role;
+            if (company !== undefined) experience.company = company;
+            if (duration !== undefined) experience.duration = duration;
+            if (description !== undefined) experience.description = description;
+            if (order !== undefined) experience.order = Number(order) || 0;
+            if (isVisible !== undefined) experience.isVisible = Boolean(isVisible);
+
             const updatedExperience = await experience.save();
             res.json(updatedExperience);
         } else {

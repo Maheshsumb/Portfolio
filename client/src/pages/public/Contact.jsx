@@ -6,6 +6,7 @@ import SEO from '../../components/shared/SEO';
 import SpotlightCard from '../../components/shared/SpotlightCard';
 
 import { useProfile } from '../../context/ProfileContext';
+import { sanitizeUrl } from '../../utils/sanitizeUrl';
 
 const Contact = () => {
     const { profile } = useProfile();
@@ -112,17 +113,17 @@ const Contact = () => {
                         <p className="text-gray-500 mb-4 text-sm uppercase tracking-wider">Socials</p>
                         <div className="flex gap-4">
                             {profile?.github && (
-                                <a href={profile.github} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 hover:scale-110 transition-all duration-300">
+                                <a href={sanitizeUrl(profile.github)} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 hover:scale-110 transition-all duration-300">
                                     <FaGithub size={20} />
                                 </a>
                             )}
                             {profile?.linkedin && (
-                                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:scale-110 transition-all duration-300">
+                                <a href={sanitizeUrl(profile.linkedin)} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:scale-110 transition-all duration-300">
                                     <FaLinkedin size={20} />
                                 </a>
                             )}
                             {profile?.instagram && (
-                                <a href={profile.instagram} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-pink-600 hover:scale-110 transition-all duration-300">
+                                <a href={sanitizeUrl(profile.instagram)} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-lg bg-dark-900/80 flex items-center justify-center text-gray-400 hover:text-white hover:bg-pink-600 hover:scale-110 transition-all duration-300">
                                     <FaInstagram size={20} />
                                 </a>
                             )}

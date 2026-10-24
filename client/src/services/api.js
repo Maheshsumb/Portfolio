@@ -8,10 +8,11 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Handle global errors, e.g., 401 logout
+    // Handle 401 logout only for protected admin routes
     if (error.response && error.response.status === 401) {
-        // Clear local storage and redirect to login
-        if (window.location.pathname !== '/login') {
+        localStorage.removeItem('userInfo');
+        // Only redirect to login if the user is currently on an admin page
+        if (window.location.pathname.startsWith('/admin')) {
             window.location.href = '/login';
         }
     }

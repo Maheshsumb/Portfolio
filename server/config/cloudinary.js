@@ -15,10 +15,15 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'portfolio',
-        allowed_formats: ['jpg', 'png', 'jpeg', 'pdf']
+        allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5 MB max per upload
+    }
+});
 
 module.exports = upload;

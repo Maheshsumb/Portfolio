@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaArrowRight, FaDownload, FaReact, FaNodeJs, FaDatabase, FaJava, FaPython, FaJs, FaHtml5, FaCss3, FaBootstrap, FaGitAlt } from 'react-icons/fa';
 import { SiSpring, SiSpringboot, SiHibernate, SiEclipseide, SiApachemaven, SiPostman } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
+import { sanitizeUrl } from '../../utils/sanitizeUrl';
 
 
 
@@ -120,7 +121,7 @@ const Home = () => {
                         
                         {profile?.resumeUrl && (
                             <a 
-                                href={profile.resumeUrl} 
+                                href={sanitizeUrl(profile.resumeUrl)} 
                                 target="_blank" 
                                 rel="noreferrer"
                                 className="border border-dark-600 hover:border-gray-400 text-gray-300 hover:text-white px-8 py-3.5 rounded-full font-medium transition-all flex items-center gap-2 bg-dark-800/50 backdrop-blur-sm"
@@ -132,12 +133,12 @@ const Home = () => {
 
                     <div className="flex gap-6 pt-8 border-t border-dark-800 mt-8">
                         {profile?.github && (
-                            <a href={profile.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                            <a href={sanitizeUrl(profile.github)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
                                 <FaGithub size={24} />
                             </a>
                         )}
                         {profile?.linkedin && (
-                            <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                            <a href={sanitizeUrl(profile.linkedin)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
                                 <FaLinkedin size={24} />
                             </a>
                         )}

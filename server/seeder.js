@@ -10,16 +10,21 @@ connectDB();
 
 const importData = async () => {
     try {
+        if (!process.env.ADMIN_USER || !process.env.ADMIN_PASS) {
+            console.error('❌ CRITICAL: Cannot seed without ADMIN_USER and ADMIN_PASS environment variables set.');
+            process.exit(1);
+        }
+
         await User.deleteMany();
 
         const adminUser = new User({
-            username: process.env.ADMIN_USER || 'admin',
-            password: process.env.ADMIN_PASS || 'pass123'
+            username: process.env.ADMIN_USER,
+            password: process.env.ADMIN_PASS
         });
 
         await adminUser.save();
 
-        console.log('Data Imported!');
+        console.log('✅ Admin User Seeded Successfully!');
         process.exit();
     } catch (error) {
         console.error(`${error}`);

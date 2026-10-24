@@ -45,7 +45,16 @@ const updateProject = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id);
         if (project) {
-            Object.assign(project, req.body);
+            const { title, description, techStack, githubLink, liveLink, imageUrls, isPublished, order } = req.body;
+            if (title !== undefined) project.title = title;
+            if (description !== undefined) project.description = description;
+            if (techStack !== undefined) project.techStack = Array.isArray(techStack) ? techStack : [techStack];
+            if (githubLink !== undefined) project.githubLink = githubLink;
+            if (liveLink !== undefined) project.liveLink = liveLink;
+            if (imageUrls !== undefined) project.imageUrls = Array.isArray(imageUrls) ? imageUrls : [];
+            if (isPublished !== undefined) project.isPublished = Boolean(isPublished);
+            if (order !== undefined) project.order = Number(order) || 0;
+
             const updatedProject = await project.save();
             res.json(updatedProject);
         } else {

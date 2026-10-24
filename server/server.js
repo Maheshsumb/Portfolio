@@ -2,24 +2,44 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 const connectDB = require('./config/db');
+const { apiLimiter } = require('./middleware/rateLimiter');
 
 dotenv.config();
 
 const app = express();
+
+// Disable information disclosure header
+app.disable('x-powered-by');
+
+// Trust reverse proxy (Render, Railway, Heroku) for secure cookies
+app.set('trust proxy', 1);
+
+// HTTP Security Headers
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+// Apply general rate limiter across all /api routes
+app.use('/api', apiLimiter);
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const allowedOrigins = [
-    'http://localhost:5173', 
     'https://maheshsumb.in',
     'https://www.maheshsumb.in',
     'https://portfolio-bice-kappa-21.vercel.app',
     'https://mahehsumb.in',
     'https://www.mahehsumb.in'
 ];
+
+// Only allow localhost origins in development environments
+if (process.env.NODE_ENV !== 'production') {
+    allowedOrigins.push('http://localhost:5173', 'http://127.0.0.1:5173');
+}
 
 if (process.env.FRONTEND_URL) {
     allowedOrigins.push(process.env.FRONTEND_URL);

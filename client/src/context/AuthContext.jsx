@@ -8,15 +8,24 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in (could verify token or just check localStorage if we used that, but we use HttpOnly cookie)
-    // There isn't a "me" endpoint yet. I should add one or just re-login.
-    // Actually, usually we have a /me endpoint to check session.
-    // For now, allow persistance via localStorage of user info (non-sensitive) or just require login on admin enter.
-    const storedUser = localStorage.getItem('userInfo');
-    if (storedUser) {
+    const verifyUser = async () => {
+      const storedUser = localStorage.getItem('userInfo');
+      if (storedUser) {
         setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+        try {
+          const { data } = await api.get('/auth/me');
+          setUser(data);
+          localStorage.setItem('userInfo', JSON.stringify(data));
+        } catch (err) {
+          // Cookie expired or invalid
+          setUser(null);
+          localStorage.removeItem('userInfo');
+        }
+      }
+      setLoading(false);
+    };
+
+    verifyUser();
   }, []);
 
   const login = async (username, password) => {

@@ -1,16 +1,45 @@
 const Message = require('../models/Message');
 const nodemailer = require('nodemailer');
 
+const escapeHtml = (str) => {
+    if (!str || typeof str !== 'string') return '';
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+};
+
 // @desc    Create a message (Public)
 // @route   POST /api/messages
 // @access  Public
 const createMessage = async (req, res) => {
     try {
         const { name, email, message } = req.body;
-        const newMessage = new Message({ name, email, message });
+
+        // Input validation & length restrictions
+        if (!name || typeof name !== 'string' || name.trim().length === 0 || name.length > 100) {
+            return res.status(400).json({ message: 'Name must be between 1 and 100 characters' });
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || typeof email !== 'string' || !emailRegex.test(email) || email.length > 200) {
+            return res.status(400).json({ message: 'A valid email address is required' });
+        }
+
+        if (!message || typeof message !== 'string' || message.trim().length === 0 || message.length > 3000) {
+            return res.status(400).json({ message: 'Message must be between 1 and 3000 characters' });
+        }
+
+        const cleanName = name.trim();
+        const cleanEmail = email.trim().toLowerCase();
+        const cleanMessage = message.trim();
+
+        const newMessage = new Message({ name: cleanName, email: cleanEmail, message: cleanMessage });
         const savedMessage = await newMessage.save();
 
-        // Send Email Notification
+        // Send Email Notification (safely escaped)
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
             console.error("❌ Email credentials missing in .env file. Skipping email.");
         } else {
@@ -22,23 +51,28 @@ const createMessage = async (req, res) => {
                 }
             });
 
+            const recipientEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'maheshsumbpatil87@gmail.com';
+            const safeName = escapeHtml(cleanName);
+            const safeEmail = escapeHtml(cleanEmail);
+            const safeMessage = escapeHtml(cleanMessage).replace(/\n/g, '<br/>');
+
             const mailOptions = {
                 from: process.env.EMAIL_USER,
-                to: 'maheshsumbpatil87@gmail.com',
-                subject: `New Portfolio Message from ${name}`,
-                text: `You have a new message from ${name} (${email}):\n\n${message}`,
+                to: recipientEmail,
+                subject: `New Portfolio Message from ${safeName}`,
+                text: `You have a new message from ${cleanName} (${cleanEmail}):\n\n${cleanMessage}`,
                 html: `
                     <h3>New Portfolio Message</h3>
-                    <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Name:</strong> ${safeName}</p>
+                    <p><strong>Email:</strong> ${safeEmail}</p>
                     <p><strong>Message:</strong></p>
-                    <p>${message}</p>
+                    <p>${safeMessage}</p>
                 `
             };
 
             try {
                 await transporter.sendMail(mailOptions);
-                console.log('✅ Email notification sent to maheshsumbpatil87@gmail.com');
+                console.log(`✅ Email notification sent to ${recipientEmail}`);
             } catch (error) {
                 console.error('❌ Error sending email:', error.message);
             }

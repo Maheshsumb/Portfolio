@@ -4,6 +4,7 @@ import Loader from '../../components/shared/Loader';
 import SEO from '../../components/shared/SEO';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import SpotlightCard from '../../components/shared/SpotlightCard';
+import { sanitizeUrl } from '../../utils/sanitizeUrl';
 
 const ProjectCard = ({ project }) => {
     // Handle both new array format and old string format
@@ -68,12 +69,12 @@ const ProjectCard = ({ project }) => {
                 
                 <div className="flex justify-between items-center pt-4 border-t border-white/5">
                     {project.githubLink && (
-                        <a href={project.githubLink} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                        <a href={sanitizeUrl(project.githubLink)} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
                             <FaGithub size={16} /> <span className="font-mono">Code</span>
                         </a>
                     )}
                     {project.liveLink && (
-                        <a href={project.liveLink} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-primary-400 hover:text-primary-300 transition-colors font-medium">
+                        <a href={sanitizeUrl(project.liveLink)} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-primary-400 hover:text-primary-300 transition-colors font-medium">
                             <FaExternalLinkAlt size={14} /> <span className="font-mono">Live Demo</span>
                         </a>
                     )}

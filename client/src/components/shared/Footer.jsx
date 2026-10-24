@@ -1,5 +1,6 @@
 import { FaGithub, FaLinkedin, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { useProfile } from '../../context/ProfileContext';
+import { sanitizeUrl } from '../../utils/sanitizeUrl';
 
 const Footer = () => {
   const { profile } = useProfile();
@@ -12,17 +13,17 @@ const Footer = () => {
         
         <div className="flex gap-6 order-1 md:order-2">
             {profile?.github && (
-                <a href={profile.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white hover:scale-110 transition-all" title="GitHub">
+                <a href={sanitizeUrl(profile.github)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white hover:scale-110 transition-all" title="GitHub">
                     <FaGithub size={20} />
                 </a>
             )}
             {profile?.linkedin && (
-                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-blue-500 hover:scale-110 transition-all" title="LinkedIn">
+                <a href={sanitizeUrl(profile.linkedin)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-blue-500 hover:scale-110 transition-all" title="LinkedIn">
                     <FaLinkedin size={20} />
                 </a>
             )}
             {profile?.instagram && (
-                <a href={profile.instagram} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-pink-500 hover:scale-110 transition-all" title="Instagram">
+                <a href={sanitizeUrl(profile.instagram)} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-pink-500 hover:scale-110 transition-all" title="Instagram">
                     <FaInstagram size={20} />
                 </a>
             )}
