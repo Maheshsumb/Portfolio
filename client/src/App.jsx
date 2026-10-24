@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import api from './services/api';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { ProfileProvider } from './context/ProfileContext';
@@ -30,6 +32,26 @@ import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from './components/shared/ScrollToTop';
 
 function App() {
+  // Keep-alive ping to backend every 12 minutes to keep Render awake
+  useEffect(() => {
+    const PING_INTERVAL_MS = 12 * 60 * 1000; // 12 minutes
+
+    const pingBackend = async () => {
+      try {
+        await api.get('/health');
+      } catch (err) {
+        // Silently catch errors so user UX is never interrupted
+        console.debug('Keep-alive ping attempt:', err?.message);
+      }
+    };
+
+    // Initial ping on app mount
+    pingBackend();
+
+    const intervalId = setInterval(pingBackend, PING_INTERVAL_MS);
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <HelmetProvider>
       <AuthProvider>

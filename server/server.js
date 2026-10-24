@@ -50,6 +50,15 @@ const path = require('path'); // Ensure path is imported
 // Make uploads folder static
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
+// Lightweight health check route (zero DB overhead to prevent cold starts)
+app.get(['/health', '/api/health'], (req, res) => {
+    res.status(200).json({
+        status: 'ok',
+        uptime: Math.floor(process.uptime()),
+        timestamp: new Date().toISOString()
+    });
+});
+
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
